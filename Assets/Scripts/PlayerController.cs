@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     InputAction moveAction;
+    private Vector2 moveInput;
+    private bool jumpRequested;
 
     [SerializeField]
     InputAction jumpAction;
@@ -37,15 +39,26 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // Movement
-        Vector2 moveInput = moveAction.ReadValue<Vector2>();
-        Vector3 move = new(moveInput.x, 0, moveInput.y);
-
-        transform.Translate(moveSpeed * Time.deltaTime * move);
+        moveInput = moveAction.ReadValue<Vector2>();
 
         // Jumping
         if (jumpAction.triggered)
         {
+            jumpRequested = true;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        Vector3 move = new(moveInput.x, 0, moveInput.y);
+        move.Normalize();
+
+        rb.MovePosition(rb.position + move * moveSpeed * Time.fixedDeltaTime);
+
+        if (jumpRequested)
+        {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            jumpRequested = false;
         }
     }
 
