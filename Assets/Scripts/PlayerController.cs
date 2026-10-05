@@ -3,6 +3,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField]
+    Vector3 spawnPos = new(0, 3, 0);
+
     private float moveSpeed = 5f;
     private float jumpForce = 10f;
 
@@ -14,9 +17,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     InputAction jumpAction;
 
+    private PlayerHealth playerHealth;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        playerHealth = GetComponent<PlayerHealth>();
+
+        // Subscribe to the OnPlayerDeath event to reset the player when they die
+        playerHealth.OnPlayerDeath.AddListener(ResetPlayer);
+
         rb = GetComponent<Rigidbody>();
 
         moveAction.Enable();
@@ -37,5 +47,11 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+    }
+
+    public void ResetPlayer()
+    {
+        playerHealth.ResetHealth();
+        transform.position = spawnPos;
     }
 }
