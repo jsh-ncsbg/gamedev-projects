@@ -6,7 +6,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     Vector3 spawnPos = new(0, 3, 0);
 
+    [SerializeField]
     private float moveSpeed = 5f;
+
+    [SerializeField]
     private float jumpForce = 10f;
 
     private Rigidbody rb;
