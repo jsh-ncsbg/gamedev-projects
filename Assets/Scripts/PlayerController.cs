@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float jumpForce = 10f;
 
+    [SerializeField]
+    private float gravityScale = 1f;
+
     private Rigidbody rb;
 
     [SerializeField]
@@ -63,6 +66,9 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             jumpRequested = false;
         }
+
+        // Apply gravity manually
+        rb.AddForce(Physics.gravity * gravityScale, ForceMode.Acceleration);
     }
 
     public void ResetPlayer()
