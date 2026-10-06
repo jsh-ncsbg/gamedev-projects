@@ -87,4 +87,12 @@ public class PlayerController : MonoBehaviour
         playerHealth.ResetHealth();
         transform.position = spawnPos;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Finish"))
+        {
+            Debug.Log("Player has reached the finish line!");
+        }
+    }
 }
