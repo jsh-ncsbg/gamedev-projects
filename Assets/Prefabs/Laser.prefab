@@ -141,5 +141,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27cd492bc9899804aad82d64afd81227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoveBackward
-  moveSpeed: 5
+  moveSpeed: 15
   backwardLimit: 5

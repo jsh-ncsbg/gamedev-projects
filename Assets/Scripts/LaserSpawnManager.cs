@@ -7,10 +7,13 @@ public class LaserSpawnManager : MonoBehaviour
     GameObject laserPrefab;
 
     [SerializeField]
-    float minSpawnInterval = 1f;
+    float spawnInterval = 1f;
 
     [SerializeField]
-    float maxSpawnInterval = 2f;
+    float burstChance = 0.2f;
+
+    [SerializeField]
+    int burstCount = 3;
 
     [SerializeField]
     Vector3 spawnPosition;
@@ -18,7 +21,7 @@ public class LaserSpawnManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Invoke(nameof(SpawnLaser), Random.Range(minSpawnInterval, maxSpawnInterval));
+        InvokeRepeating(nameof(SpawnLaser), spawnInterval, spawnInterval);
     }
 
     // Update is called once per frame
@@ -31,13 +34,18 @@ public class LaserSpawnManager : MonoBehaviour
     {
         if (!enabled) return;
 
-        float rotationZ = Random.Range(0, 180f);
-        float yPosition = this.spawnPosition.y + Random.Range(-4f, 2f);
-        float xPosition = Random.Range(-3f, 3f);
+        bool shouldBurst = Random.value < burstChance;
 
-        Vector3 newSpawnPosition = new Vector3(xPosition, yPosition, this.spawnPosition.z);
-        Instantiate(laserPrefab, newSpawnPosition, laserPrefab.transform.rotation * Quaternion.Euler(0, 0, rotationZ));
+        int spawnCount = shouldBurst ? Random.Range(1, burstCount + 1) : 1;
 
-        Invoke(nameof(SpawnLaser), Random.Range(minSpawnInterval, maxSpawnInterval));
+        for (int i = 0; i < spawnCount; i++)
+        {
+            float rotationZ = Random.Range(0, 180f);
+            float yPosition = this.spawnPosition.y + Random.Range(-4f, 2f);
+            float xPosition = Random.Range(-3f, 3f);
+
+            Vector3 newSpawnPosition = new Vector3(xPosition, yPosition, this.spawnPosition.z);
+            Instantiate(laserPrefab, newSpawnPosition, laserPrefab.transform.rotation * Quaternion.Euler(0, 0, rotationZ));
+        }
     }
 }
