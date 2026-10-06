@@ -12345,7 +12345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LaserSpawnManager
   laserPrefab: {fileID: 1242421811686340682, guid: 100860227de6d5a409eb86d0268cdf99, type: 3}
-  spawnInterval: 0.8
+  spawnInterval: 1
   burstChance: 0.8
   burstCount: 4
   spawnPosition: {x: 0, y: 4, z: 100}
