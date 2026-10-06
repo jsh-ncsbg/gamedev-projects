@@ -34,6 +34,16 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public void Heal(int healAmount)
+    {
+        currentHealth += healAmount;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        Debug.Log($"Player health: {currentHealth}/{maxHealth}");
+    }
+
     public void ResetHealth()
     {
         currentHealth = maxHealth;
