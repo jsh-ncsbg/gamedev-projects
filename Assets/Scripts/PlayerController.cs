@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -29,6 +30,8 @@ public class PlayerController : MonoBehaviour
     InputAction jumpAction;
 
     private PlayerHealth playerHealth;
+
+    public UnityEvent OnGameFinish;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -93,6 +96,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Finish"))
         {
             Debug.Log("Player has reached the finish line!");
+            OnGameFinish?.Invoke();
         }
     }
 }

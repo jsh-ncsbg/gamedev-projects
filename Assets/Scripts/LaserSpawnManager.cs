@@ -48,4 +48,9 @@ public class LaserSpawnManager : MonoBehaviour
             Instantiate(laserPrefab, newSpawnPosition, laserPrefab.transform.rotation * Quaternion.Euler(0, 0, rotationZ));
         }
     }
+
+    public void StopSpawning()
+    {
+        CancelInvoke(nameof(SpawnLaser));
+    }
 }
