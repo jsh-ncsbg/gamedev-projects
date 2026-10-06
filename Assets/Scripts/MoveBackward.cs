@@ -5,6 +5,7 @@ public class MoveBackward : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 5f;
 
+    [SerializeField]
     private float backwardLimit = -10f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

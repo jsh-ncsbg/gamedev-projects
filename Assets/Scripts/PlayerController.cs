@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float gravityScale = 1f;
 
+    [SerializeField]
+    private float xRange = 3.5f;
+
     private Rigidbody rb;
 
     [SerializeField]
@@ -60,6 +63,14 @@ public class PlayerController : MonoBehaviour
         move.Normalize();
 
         rb.MovePosition(rb.position + move * moveSpeed * Time.fixedDeltaTime);
+        if (rb.position.x < -xRange)
+        {
+            rb.position = new Vector3(-xRange, rb.position.y, rb.position.z);
+        }
+        else if (rb.position.x > xRange)
+        {
+            rb.position = new Vector3(xRange, rb.position.y, rb.position.z);
+        }
 
         if (jumpRequested)
         {
