@@ -36,13 +36,13 @@ public class LaserSpawnManager : MonoBehaviour
 
         bool shouldBurst = Random.value < burstChance;
 
-        int spawnCount = shouldBurst ? Random.Range(1, burstCount + 1) : 1;
+        int spawnCount = shouldBurst ? Random.Range(2, burstCount + 1) : 1;
 
         for (int i = 0; i < spawnCount; i++)
         {
             float rotationZ = Random.Range(0, 180f);
-            float yPosition = this.spawnPosition.y + Random.Range(-4f, 2f);
-            float xPosition = Random.Range(-3f, 3f);
+            float yPosition = this.spawnPosition.y + Random.Range(-3.5f, 3f);
+            float xPosition = Random.Range(-4f, 4f);
 
             Vector3 newSpawnPosition = new Vector3(xPosition, yPosition, this.spawnPosition.z);
             Instantiate(laserPrefab, newSpawnPosition, laserPrefab.transform.rotation * Quaternion.Euler(0, 0, rotationZ));
