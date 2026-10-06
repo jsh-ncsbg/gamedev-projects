@@ -10,6 +10,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 5f;
 
+    [SerializeField, Min(0f)]
+    private float movementStartDelay = 3f;
+
+    private float movementUnlockTime;
+
     [SerializeField]
     private float jumpForce = 10f;
 
@@ -43,6 +48,8 @@ public class PlayerController : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
 
+        movementUnlockTime = Time.time + movementStartDelay;
+
         moveAction.Enable();
         jumpAction.Enable();
     }
@@ -50,6 +57,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.time < movementUnlockTime)
+        {
+            moveInput = Vector2.zero;
+            jumpRequested = false;
+            return;
+        }
+
         // Movement
         moveInput = moveAction.ReadValue<Vector2>();
 
@@ -62,6 +76,14 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Keep gravity active while waiting for the lasers to reach the play area.
+        rb.AddForce(Physics.gravity * gravityScale, ForceMode.Acceleration);
+
+        if (Time.time < movementUnlockTime)
+        {
+            return;
+        }
+
         Vector3 move = new(moveInput.x, 0, moveInput.y);
         move.Normalize();
 
@@ -81,8 +103,6 @@ public class PlayerController : MonoBehaviour
             jumpRequested = false;
         }
 
-        // Apply gravity manually
-        rb.AddForce(Physics.gravity * gravityScale, ForceMode.Acceleration);
     }
 
     public void ResetPlayer()
